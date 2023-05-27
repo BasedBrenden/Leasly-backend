@@ -22,10 +22,18 @@ public class LeaslyController {
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable String id, @RequestBody Apartments apartments) {
+    @RequestMapping(value = "/reviews/{id}", method = RequestMethod.PUT)
+    public void updateReviews(@PathVariable String id, @RequestBody Apartments apartments) {
+        Apartments existingRepo = apartmentsRepository.findById(id).orElse(null);
+        BeanUtils.copyProperties(apartments, existingRepo, "apartment_id");
+        apartmentsRepository.saveAndFlush(apartments);
+    }
+
+    @RequestMapping(value = "/subleases/{id}", method = RequestMethod.PUT)
+    public void updateSubleases(@PathVariable String id, @RequestBody Apartments apartments) {
         Apartments existingRepo = apartmentsRepository.findById(id).orElse(null);
         BeanUtils.copyProperties(apartments, existingRepo, "apartment_id");
         apartmentsRepository.saveAndFlush(apartments);
     }
 }
+
