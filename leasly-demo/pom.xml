@@ -54,20 +54,43 @@
 			<artifactId>s3</artifactId>
 			<version>2.17.2</version>
 		</dependency>
+		<dependency>
+        	<groupId>com.github.ulisesbocchio</groupId>
+        	<artifactId>jasypt-spring-boot</artifactId>
+        	<version>3.0.5</version>
+		</dependency>
 	</dependencies>
 
-	<dependency>
-        <groupId>org.socialsignin.spring.data.dynamodb</groupId>
-        <artifactId>spring-data-dynamodb</artifactId>
-        <version>5.2.0</version>
-    </dependency>
-
 	<build>
+	    <resources>
+        <resource>
+            <filtering>true</filtering>
+            <directory>src/test/resources</directory>
+            <includes>
+                <include>**/*.properties</include>
+            </includes>
+            <excludes>
+                <exclude>**/*local.properties</exclude>
+            </excludes>
+        </resource>
+        <resource>
+            <directory>src/main/resources</directory>
+            <includes>
+                <include>**/*.properties</include>
+                <include>**/*.xml</include>
+            </includes>
+        </resource>
+    </resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+      			<groupId>com.github.ulisesbocchio</groupId>
+      			<artifactId>jasypt-maven-plugin</artifactId>
+      			<version>3.0.5</version>
+    		</plugin>
 		</plugins>
 	</build>
 
