@@ -8,42 +8,28 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.*;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
-import org.jasypt.encryption.StringEncryptor;
-import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
+
 
 
 
 
 @Configuration
 @EnableEncryptableProperties
+@EnableDynamoDBRepositories(basePackages = "com.puur.leaslydemo.repositories")
 public class DynamoDbConfig {
 
-    @Value("${aws.access.key}")
+    @Value("${aws.accessKeyId}")
     private String awsAccessKey;
 
-    @Value("${aws.access.secret-key}")
+    @Value("${aws.secretKey}")
     private String awsSecretKey;
 
     @Value("${aws.dynamodb.endpoint}")
     private String awsDynamoDBEndPoint;
 
-    @Value("${aws.region:}")
+    @Value("${aws.region}")
     private String awsRegion;
-
-    @Bean(name = "jaspytStringEncryptor")
-    public StringEncryptor getPasswordEncryptor() {
-        PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
-        SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-        config.setPassword("AWSKeys"); // encryptor's private key
-        config.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
-        config.setKeyObtentionIterations("1000");
-        config.setPoolSize("1");
-        config.setStringOutputType("base64");
-        encryptor.setConfig(config);
-        return encryptor;
-    }
-
 
     @Bean
     public AWSCredentials amazonAWSCredentials(){

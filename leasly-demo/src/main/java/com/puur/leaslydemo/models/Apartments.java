@@ -2,6 +2,8 @@ package com.puur.leaslydemo.models;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
@@ -10,7 +12,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 /**
  * Apartments
  */
-
+@Service
 @DynamoDBTable(tableName = "Apartments")
 public class Apartments {
 
