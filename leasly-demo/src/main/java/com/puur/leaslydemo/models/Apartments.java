@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
@@ -23,11 +24,12 @@ public class Apartments {
     public Apartments() {
     }
 
-
+    @DynamoDBAttribute
     public List<IndvApartment> getApartments() {
         return apartments;
     }
 
+    @DynamoDBAttribute
     public void setApartments(List<IndvApartment> apartments) {
         this.apartments = apartments;
     }

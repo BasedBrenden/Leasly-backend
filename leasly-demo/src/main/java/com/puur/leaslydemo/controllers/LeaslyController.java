@@ -19,7 +19,7 @@ import com.puur.leaslydemo.repositories.ApartmentsRepository;
 @RestController
 @RequestMapping("/api")
 public class LeaslyController {
-    @GetMapping
+    @GetMapping(path = "/hello")
     public String hello(){  
         String chickin = "chickin";
         return chickin;  
@@ -28,25 +28,26 @@ public class LeaslyController {
      @Autowired
     private ApartmentsRepository apartmentsRepository;
 
-    @GetMapping
+    @GetMapping(path = "/apartments")
     public List<Apartments> list() {
         return apartmentsRepository.findAll();
     }
     
-
+    /*
     @RequestMapping(value = "/reviews/{id}", method = RequestMethod.PUT)
     public void updateReviews(@PathVariable String id, @RequestBody Apartments apartments) {
         Apartments existingRepo = apartmentsRepository.findById(id).orElse(null);
         BeanUtils.copyProperties(apartments, existingRepo, "apartment_id");
-        apartmentsRepository.saveAndFlush(apartments);
+        
     }
 
     @RequestMapping(value = "/subleases/{id}", method = RequestMethod.PUT)
     public void updateSubleases(@PathVariable String id, @RequestBody Apartments apartments) {
         Apartments existingRepo = apartmentsRepository.findById(id).orElse(null);
         BeanUtils.copyProperties(apartments, existingRepo, "apartment_id");
-        apartmentsRepository.saveAndFlush(apartments);
+        
     }
+    */
 
 }
 

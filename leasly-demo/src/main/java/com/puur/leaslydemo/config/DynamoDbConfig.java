@@ -10,6 +10,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
 
+import org.springframework.util.StringUtils;
+
+
 
 
 
@@ -20,32 +23,31 @@ import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRep
 public class DynamoDbConfig {
 
     @Value("${aws.accessKeyId}")
-    private String awsAccessKey;
+    private String amazonAWSAccessKey;
 
     @Value("${aws.secretKey}")
-    private String awsSecretKey;
+    private String amazonAWSSecretKey;
 
     @Value("${aws.dynamodb.endpoint}")
-    private String awsDynamoDBEndPoint;
+    private String amazonDynamoDBEndpoint;
 
     @Value("${aws.region}")
     private String awsRegion;
 
     @Bean
-    public AWSCredentials amazonAWSCredentials(){
-        return new BasicAWSCredentials(awsAccessKey, awsSecretKey);
-    }    public AWSCredentialsProvider amazonAWSCredentialsProvider(){
-        return new AWSStaticCredentialsProvider(amazonAWSCredentials());
-    }// Returns the amazonDB instance using the endpoint as well as credentials
-public AmazonDynamoDB amazonDynamoDB(){
-        return AmazonDynamoDBClientBuilder.standard()
-                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(awsDynamoDBEndPoint, awsRegion))
-                .withCredentials(amazonAWSCredentialsProvider())
-                .build();
+    public AmazonDynamoDB amazonDynamoDB() {
+        AmazonDynamoDB amazonDynamoDB = new AmazonDynamoDBClient(amazonAWSCredentials());
+        
+        if (!StringUtils.isEmpty(amazonDynamoDBEndpoint)) {
+            amazonDynamoDB.setEndpoint(amazonDynamoDBEndpoint);
+        }
+        
+        return amazonDynamoDB;
     }
 
     @Bean
-    public DynamoDBMapper mapper(){
-        return new DynamoDBMapper(amazonDynamoDB());
+    public AWSCredentials amazonAWSCredentials() {
+        return new BasicAWSCredentials(
+          amazonAWSAccessKey, amazonAWSSecretKey);
     }
 }
