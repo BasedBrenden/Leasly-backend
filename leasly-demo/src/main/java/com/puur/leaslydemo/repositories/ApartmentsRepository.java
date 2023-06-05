@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @EnableScan
-public interface ApartmentsRepository extends CrudRepository<Apartments, List>{
-    List<Apartments> findAll();
+public interface ApartmentsRepository extends CrudRepository<Apartments, List<Apartments>>{
+   List<Apartments> findAll();
+    
 }
