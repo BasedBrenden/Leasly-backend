@@ -28,16 +28,14 @@ public class LeaslyController {
      @Autowired
     private ApartmentsRepository apartmentsRepository;
 
-    @GetMapping(path = "/apartments/")
+    @GetMapping(path = "/apartments")
     public List<Apartments> list() {
         return apartmentsRepository.findAll();
     }
 
     @GetMapping(path = "/apartments/{id}")
     public Apartments getApartmentsByName(@PathVariable String id) {
-       System.out.println("id: " + id);
         for (Apartments apartment : apartmentsRepository.findAll()) {
-            System.out.println("id: " + apartment);
             if (apartment.getName().equals(id)) {
                 return apartment;
             }
