@@ -1,6 +1,6 @@
 package com.puur.leaslydemo.controllers;
 
-import java.util.List;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +46,47 @@ public class LeaslyController {
         return getApartmentsByName(id);
     }
     
+    @GetMapping(path = "/userReviews/{id}")
+    public List<Review> getReviewsByName(@PathVariable String id) {
+        List<Review> reviews = new ArrayList<>();
+        for(Apartments apartment: apartmentsRepository.findAll()) {
+            for(Review review: apartment.getReviews()) {
+                    reviews.add(review);
+            }
+        }
+        return reviews;
+    }
+
+    @GetMapping(path = "/userSubleases/{id}")
+    public List<Sublease> getSubleasesByName(@PathVariable String id) {
+        List<Sublease> subleases = new ArrayList<>();
+        for(Apartments apartment: apartmentsRepository.findAll()) {
+            for(Sublease sublease: apartment.getSubleases()) {
+                if(sublease.getLeaserId().equals(id)) {
+                    subleases.add(sublease);
+                }
+            }
+        }
+        return subleases;
+    }
     
+    @GetMapping(path = "/sortedSubleases")
+    public List<Sublease> getSortedSubleases() {
+        List<Sublease> subleases = new ArrayList<>();
+        for(Apartments apartment: apartmentsRepository.findAll()) {
+            for(Sublease sublease: apartment.getSubleases()) {
+                    subleases.add(sublease);
+            }
+        }
+        Collections.sort(subleases, new Comparator<Sublease>() {
+            @Override
+            public int compare(Sublease sub1, Sublease sub2) {
+                return sub1.getStartDate().compareTo(sub2.getStartDate());
+            }
+        });
+        return subleases;
+    }
+
     @RequestMapping(value = "/reviews/{id}", method = RequestMethod.PUT)
     public void updateReviews(@PathVariable String id, @RequestBody Review review) {
         Apartments existingRepo = getApartmentsByName(id);
