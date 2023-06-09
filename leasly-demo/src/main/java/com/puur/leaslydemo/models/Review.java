@@ -1,6 +1,9 @@
 package com.puur.leaslydemo.models;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 
+@DynamoDBDocument
 public class Review {
     private String userId;
     private String description;
@@ -16,15 +19,31 @@ public class Review {
         this.rating = rating;
     }
 
+    @DynamoDBAttribute(attributeName = "userId")
     public String getUserId() {
         return userId;
     }
 
+    @DynamoDBAttribute(attributeName = "description")
     public String getDescription() {
         return description;
     }
 
+    @DynamoDBAttribute(attributeName = "rating")
     public int getRating() {
         return rating;
     }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
 }

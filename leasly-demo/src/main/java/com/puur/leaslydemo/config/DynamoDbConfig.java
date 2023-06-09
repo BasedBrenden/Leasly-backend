@@ -4,19 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.amazonaws.auth.*;
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.*;
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.socialsignin.spring.data.dynamodb.repository.config.EnableDynamoDBRepositories;
-
 import org.springframework.util.StringUtils;
-
-
-
-
-
-
 @Configuration
 @EnableEncryptableProperties
 @EnableDynamoDBRepositories(basePackages = "com.puur.leaslydemo.repositories")

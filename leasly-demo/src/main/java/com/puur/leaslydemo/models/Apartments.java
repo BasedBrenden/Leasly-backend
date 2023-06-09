@@ -1,17 +1,11 @@
 package com.puur.leaslydemo.models;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.puur.leaslydemo.models.Amenities;
-import com.puur.leaslydemo.models.Review;
-import com.puur.leaslydemo.models.Sublease;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperFieldModel;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTyped;
 
@@ -72,11 +66,13 @@ public class Apartments {
     }
 
     @DynamoDBAttribute(attributeName = "reviews")
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.L)
     public List<Review> getReviews() {
         return reviews;
     }
 
     @DynamoDBAttribute(attributeName = "subleases")
+    @DynamoDBTyped(DynamoDBMapperFieldModel.DynamoDBAttributeType.L)
     public List<Sublease> getSubleases() {
         return subleases;
     }
@@ -132,6 +128,7 @@ public class Apartments {
     /*
      * adds a review to the apartment reviews list
      */
+     
     public void addReview(Review newReview) {
         this.reviews.add(newReview);
     }
