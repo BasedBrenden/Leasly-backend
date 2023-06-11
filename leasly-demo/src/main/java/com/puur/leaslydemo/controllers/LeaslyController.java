@@ -24,16 +24,10 @@ public class LeaslyController {
                 return apartment;
             }
         }
-        
         return apartmentsRepository.findAll().get(1);
     }
-    @GetMapping(path = "/hello")
-    public String hello(){  
-        String chickin = "chickin";
-        return chickin;  
-    }  
 
-     @Autowired
+    @Autowired
     private ApartmentsRepository apartmentsRepository;
 
     @GetMapping(path = "/apartments")
@@ -51,7 +45,9 @@ public class LeaslyController {
         List<Review> reviews = new ArrayList<>();
         for(Apartments apartment: apartmentsRepository.findAll()) {
             for(Review review: apartment.getReviews()) {
+                if(review.getUserId().equals(id)) {
                     reviews.add(review);
+                }
             }
         }
         return reviews;
